@@ -1,0 +1,131 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="DefenseTraining.Web.SiteMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title>AFD Training</title>
+    <link href="Styles/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="Styles/jquery.window.css" rel="stylesheet" type="text/css" />
+    <link href="Styles/jquery.ui.theme.css" rel="stylesheet" type="text/css" />
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <!-- JavaScript Includes -->
+    <script src="scripts/jquery.js" type="text/javascript"></script>   
+    <script src="Scripts/jquery-ui-1.8.12.custom.min.js" type="text/javascript"></script>
+    <script src="scripts/jquery.window.js" type="text/javascript"></script>
+    <script src="Scripts/jquery.tmpl.min.js" type="text/javascript"></script>
+    <script src="Scripts/json2.js" type="text/javascript"></script>   
+    <script src="Scripts/common.js" type="text/javascript"></script> 
+
+    <script type="text/javascript">
+        function openTrainingReportViewer(id, rptType) {
+            var wHeight, wWidth;
+            var url;
+            if (id > 0) {
+                wHeight = 550;
+                wWidth = 910;
+                url = "TrainingReportViewer.aspx?id=" + id + "&type=" + rptType;
+            }
+            else {
+                var filter = createFilter();
+                var qString = "cid=" + filter.CountryId;
+                qString += "&df=" + filter.DateFrom;
+                qString += "&dt=" + filter.DateTo;
+                qString += "&etid=" + filter.EventTypeId;
+                qString += "&gid=" + filter.GenreId;
+                qString += "&eid=" + filter.Id;
+                qString += "&name=" + encodeURIComponent(filter.Name);
+                qString += "&pn=" + filter.PersonalNo;
+                qString += "&rid=" + filter.RankId;
+                qString += "&sid=" + filter.SpecialityId;
+                wHeight = 530;
+                wWidth = 1120;
+                url = "TrainingReportViewer.aspx?" + qString;
+            }
+            $.window({
+                showModal: true,
+                title: "Show Report",
+                url: url,
+                height: wHeight,
+                width: wWidth,
+                resizable: false,
+                maximizable: false,
+                bookmarkable: false,
+                showRoundCorner: true
+            });
+        }
+
+        function openReminderViewer(reportType) {
+            var title = "Reminders";
+            var year = 0;
+            if (reportType != "") {
+                title = "Allotment Statement";
+                year = prompt("Please enter the year");
+            }
+            $.window({
+                showModal: true,
+                title: title,
+                url: "ReminderViewer.aspx?reportType=" + reportType + "&year=" + year,
+                height: 600,
+                width: 930,
+                resizable: false,
+                maximizable: false,
+                bookmarkable: false,
+                showRoundCorner: true
+            });
+        } 
+    </script>
+</head>
+<body style="background-color: #b6b7bc;">
+    <form runat="server">
+    <div class="page">
+        <div class="header">
+            <table>
+                <tr>
+                    <td>
+                        <img src="Styles/images/afd-logo.png" alt="" style="width: 50px; height: 55px" />
+                    </td>
+                    <td>
+                        <h1>
+                            AFD Training Management System</h1>
+                    </td>
+                </tr>
+            </table>
+            <div class="clear hideSkiplink">
+                <asp:Menu ID="NavigationMenu" runat="server" CssClass="menu" EnableViewState="false"
+                    IncludeStyleBlock="false" Orientation="Horizontal">
+                    <Items>
+                        <asp:MenuItem Text="Home" NavigateUrl="~/Default.aspx" ToolTip="Go to home page">
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="Admin" NavigateUrl="#" ToolTip="Admin section">
+                            <asp:MenuItem NavigateUrl="~/CountryList.aspx" Text="Countries" ToolTip="Manage country" />
+                            <asp:MenuItem Text="Ranks" NavigateUrl="~/RankList.aspx" ToolTip="Manage rank" />
+                            <asp:MenuItem NavigateUrl="~/EventTypeList.aspx" Text="Event types" ToolTip="Manage event types" />
+                            <asp:MenuItem NavigateUrl="~/GenreList.aspx" Text="Genres" ToolTip="Manage genre" />
+                            <asp:MenuItem NavigateUrl="~/ResponsibilityList.aspx" Text="Responsibilities" ToolTip="Manage responsibilities" />
+                            <asp:MenuItem NavigateUrl="~/SpecialityList.aspx" Text="Specialities" ToolTip="Manage specialities" />
+                            <asp:MenuItem NavigateUrl="~/RequiredDocList.aspx" Text="Required Docs" ToolTip="Manage required documents" />
+                            <asp:MenuItem NavigateUrl="~/UnitList.aspx" Text="Units" ToolTip="Manage units" />
+                            <asp:MenuItem NavigateUrl="~/BranchList.aspx" Text="Branches" ToolTip="Manage branches" />
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="Events" ToolTip="Event section">
+                            <asp:MenuItem Text="View event list" NavigateUrl="~/EventList.aspx" ToolTip="View event list" />
+                        </asp:MenuItem>
+                    </Items>
+                </asp:Menu>
+            </div>
+        </div>
+        <div style="background-color: #E09B1B; padding: 5px; color: #ffffff; text-align: center;">
+            <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="footer">
+    </div>
+    </form>
+</body>
+</html>

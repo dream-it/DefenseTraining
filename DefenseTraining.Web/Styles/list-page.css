@@ -1,0 +1,39 @@
+﻿table.itemTable
+{    
+    border-width: 1px;
+    border-color: Silver;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.itemTable th
+{
+    background-image: url("images/ui-bg_highlight-soft_75_cccccc_1x100.png");
+    background-repeat: repeat-x;
+    border-width: 1px;
+    padding: 3px 7px 4px 7px;
+    border-style: solid;
+    border-color: Silver;
+    font-weight: normal;
+    text-align: left;
+    height: 20px;
+    color: Black;
+}
+
+table.itemTable td
+{
+    border-width: 1px;
+    padding: 3px 7px 4px 7px;
+    border-style: solid;
+    border-color: Silver;
+}
+
+input[type=text]
+{
+    width: 100px;    
+}
+
+select
+{
+    width: 150px;
+}
